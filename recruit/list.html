@@ -1,0 +1,370 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>招贤纳士-社会招聘</title>
+<style>
+			body,
+			ul,
+			dd,
+			p {
+				margin: 0;
+				padding: 0;
+			}
+			
+			li {
+				list-style: none;
+			}
+			
+			body,
+			div,
+			p,
+			li {
+				font-family: "Lucida Grande", Verdana, Lucida, Arial, Helvetica, Microsoft Yahei, simsun, sans-serif;
+				font-size: 12px;
+				color: #333;
+			}
+			
+			img,
+			a {
+				border: 0;
+			}
+			
+			a:link,
+			a:visited,
+			a:active {
+				color: #333;
+				text-decoration: none;
+			}
+			
+			a:hover {
+				color: #e70;
+				text-decoration: none;
+			}
+			
+			.title {
+				font-size: 30px;
+			}
+			/*list.html*/
+			
+			#wrap {
+				width: 920px;
+				margin: 20px auto 0;
+				/*background: url(img/c_bg.gif) repeat-y 190px 0;*/
+			}
+			
+			.left {
+				float: left;
+				width: 160px;
+			}
+			
+			.left h2 {
+				font-size: 16px;
+				margin-bottom: 30px;
+			}
+			
+			.left li {
+				margin-bottom: 5px;
+				font-family: "微软雅黑";
+			}
+			
+			.left li a {
+				color: #333;
+				font-size: 14px;
+				display: block;
+				text-decoration: none;
+				height: 25px;
+				display: block;
+				line-height: 25px;
+				text-align: center;
+			}
+			
+			.left li.focus a,
+			.left li a:hover {
+				color: #fff;
+				background: #328fbe;
+			}
+			
+			.right {
+				float: right;
+				width: 700px;
+			}
+			
+			.right .title {
+				padding: 50px 0 20px;
+			}
+			
+			.right .info {
+				font-family: "微软雅黑";
+			}
+			
+			.right .zp span {
+				font-size: 13px;
+				font-weight: bold;
+				margin-right: 30px;
+			}
+			
+			.right .zp .date {
+				position: relative;
+				left: 30px;
+				font-weight: normal;
+			}
+			
+			.right .yq {
+				color: #666;
+				line-height: 24px;
+				margin-bottom: 37px;
+				padding-top: 6px;
+			}
+			
+			.right .yq a {
+				color: #328fbe;
+			}
+			
+			.clear {
+				clear: both;
+				font-size: 0px;
+				width: 0px;
+				height: 1px;
+				visibility: hidden;
+				line-height: 0;
+			}
+			
+			.pages {
+				width: 700px;
+				height: 26px;
+				border: 1px solid #d6d6d6;
+				background: #e2e2e2;
+				margin: 30px 0 40px;
+				position: relative;
+				line-height: 26px;
+				font-size: 20px;
+			}
+			.pages a.active{
+				background: #666;
+				color: #fff;
+			}
+			
+			.pages .prev {
+				position: absolute;
+				left: 13px;
+				top: -2px;
+			}
+			
+			.pages .next {
+				position: absolute;
+				right: 13px;
+				top: -2px;
+			}
+			
+			.pages p {
+				padding-left: 62px;
+			}
+			
+			.pages p span {
+				float: left;
+				margin-top: 3px;
+				margin-left: 2px;
+			}
+			
+			.pages p span a {
+				display: block;
+				width: 20px;
+				height: 20px;
+				text-align: center;
+				line-height: 20px;
+			}
+			
+			.pages p span.focus a,
+			.pages p a:hover {
+				background: #666;
+				color: #fff;
+			}
+			/*list.html*/
+			/*content.html*/
+			
+			.content h2 {
+				font-size: 16px;
+				font-weight: bold;
+				color: #328fbe;
+				font-family: "微软雅黑";
+				padding-bottom: 8px;
+			}
+			
+			.content span {
+				float: left;
+				line-height: 24px;
+				color: #666;
+			}
+			
+			.content span.l {
+				width: 443px;
+			}
+			
+			.content dl,
+			.content p {
+				margin-top: 26px;
+			}
+			
+			.content dl dt {
+				line-height: 28px;
+			}
+			
+			.content dl dd {
+				line-height: 24px;
+			}
+			
+			.content {
+				padding-bottom: 20px;
+			}
+		</style>
+</head>
+<body>
+  <div id="wrap">
+  	<div class="left">
+    	<h2>招贤纳士</h2>
+      <ul>
+      </ul>
+    </div>
+  	<div class="right">
+    	<div class="title">
+      </div>
+      <div class="info">
+      </div>
+      <div class="pages">
+        <span class="prev">
+          <a href="javascript:;">
+            <img src="img/pre.gif">
+          </a>
+        </span>
+        <span class="next">
+          <a href="javascript:;">
+            <img src="img/next.gif">
+          </a>
+        </span>       
+      </div>
+      
+    </div>
+    <div class="clear"></div>
+  </div>
+<script src="js/data.js"></script>
+<script type="text/javascript">
+/*1、初始化一下哈希，还有search的值
+ * 2、每次切换search的时候，都让哈希值从1开始计数
+ */
+	 var left=document.querySelector(".left");
+	 var left_ul=left.getElementsByTagName("ul")[0];
+	 var left_li=document.getElementsByTagName("li");
+	 var title=document.querySelector(".title");
+	 var info=document.querySelector(".info");
+	 var pages=document.querySelector(".pages");
+	 var prev=document.querySelector(".prev");
+	 var next=document.querySelector(".next");
+	 var hash=window.location.hash.substr(1).split("=")[1]||1;
+	 var lx_type='';
+	 var num=2;
+	 /*设置一下search，地址查询信息，可以刷新，在以？开始，在#之前。通过改变search转换一下是社会还是校园*/
+	if(window.location.search){
+		lx_type=window.location.search.substr(1);
+	}else{
+		window.location.search="sh";
+		lx_type="sh";
+	}
+	 /*创建li，里面有a，innerhtml中有值======左边的按钮============*/
+	for(var i=0;i<aData.list.length;i++){
+		var li=document.createElement("li");
+		li.setAttribute("l_x",aData.list[i].lx);
+		var a=document.createElement("a");
+		a.href="javascript:;";
+		a.innerHTML=aData.list[i].text;
+		li.appendChild(a);
+		left_ul.appendChild(li);
+	}
+	/*====右边的标题===========================*/
+	createImg();//创建右边标题+点击切换
+	setInfo(hash);
+	page(num);
+	
+	window.onhashchange=function(){
+		hash=window.location.hash.substr(1).split("=")[1];
+		setInfo(hash);
+		var span_active=pages.getElementsByTagName("p")[0].getElementsByTagName("span");
+		for(var i=0;i<span_active.length;i++){
+			span_active[i].className="";
+		}
+		span_active[hash-1].className="focus";
+	}
+	prev.onclick=function(){
+		var prev=hash*1-1;
+		if(prev<1){
+			prev=1;
+		}
+		window.location.hash="pages="+prev;
+	}
+	next.onclick=function(){
+		var n=document.querySelectorAll(".pages p span").length;
+		var next=hash*1+1;
+		if(next>n){
+			next=n;
+		}
+		window.location.hash="pages="+next;
+	}
+	
+	function createImg(){//创建右边标题
+		var tImg=document.createElement("img");
+		tImg.src=aData[lx_type].img;
+		title.appendChild(tImg);
+		
+		for(var i=0;i<left_li.length;i++){
+			left_li[i].onclick=function(){
+				window.location.hash="page=1";//设置一下，每次点击的时候，就设置哈希为1
+				var p1=pages.getElementsByTagName("p")[0];
+				pages.removeChild(p1);
+				window.location.search=this.getAttribute("l_x");
+				tImg.src=aData[lx_type].img;
+				setInfo(hash);
+				page(num);
+			}
+		}
+	}
+	function setInfo(hash){//填充info中的内容
+		var startN=(hash-1)*num,endN=startN+num;
+		var str="";
+		for(var i=startN;i<endN;i++){
+			if(aData[lx_type].text[i]){
+				(function(i){
+			 	str+=`
+			<p class="zp">
+        	<span><a href="">★ 职位需求：${aData[lx_type].text[i].zw}</a></span>
+          <span>需求人数：${aData[lx_type].text[i].rs}名</span>
+         	<span class="date">${aData.date(aData[lx_type].text[i].sj)}</span>
+        </p>
+      	<p class="yq">${aData[lx_type].text[i].info[0].l}[<a href="">查看详情</a>]
+        </p>
+			`
+			 })(i)
+			}
+			 
+		}
+		info.innerHTML=str;
+	}
+	function page(num){
+		var len=aData[lx_type].text.length;
+		var ps=Math.ceil(len/num);
+		var p=document.createElement("p");
+		for(var i=1;i<=ps;i++){
+			var span=document.createElement("span");
+			var a=document.createElement("a");
+			a.href="#page="+i;
+			a.innerHTML=i;
+			span.appendChild(a);
+			p.appendChild(span);
+		}
+		pages.appendChild(p);
+		var span_active=pages.getElementsByTagName("p")[0].getElementsByTagName("span");
+		span_active[hash-1].className="focus";
+		return ps;
+	}
+</script>
+</body>
+</html>
