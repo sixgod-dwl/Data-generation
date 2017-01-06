@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				font-family: "微软雅黑";
+				color: #333;
+			}
+			#form{
+				text-align: center;
+				
+			}
+			#txt{width: 486px;margin:5px auto;text-align: left;}
+			#txt span{																
+				display: inline-block;
+				font-family: "微软雅黑";
+				font-size: 14px;
+				color: #333;
+			}
+			#txt span:nth-of-type(1){
+				width:156px;
+				height:20px;
+			}
+			#txt span:nth-of-type(2){
+				width:120px;
+				height:20px;
+			}
+		    #box{
+		    	margin: 120px auto;
+		    	width: 600px;
+		    }
+			.c1{
+				background: skyblue;
+			}
+			.c2{
+				background: #fff;
+			}
+			.c3{
+				background: #00BFFF;
+			}
+			.c4{
+				background: #00BFFF;
+				color: #fff;
+			}
+			.c5{
+				background:pink;
+				color: #fff;
+			}
+			table {
+				border: 1px solid #000;
+				border-right:0;
+				border-bottom: none;
+			}
+			table thead th,table tbody td{
+				text-align: center;
+				line-height:25px;
+				border-right:1px solid #000;
+			}
+			table thead th,table tbody td{
+				border-bottom: 1px solid #000;
+			}
+			.sortmode{
+				width: 100px;
+				height: 25px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<div id="top">
+				<div id="txt">
+				    <span>请输入姓名</span>
+				    <span>请选择性别</span>
+				    <span>请输入年龄</span>
+				</div>
+				<div id="form">
+				<form id="form1">
+				    <input type="text" name="username" placeholder="姓名" />
+				    <select name="sex">
+				        <!--<option value="">请选择一个性别</option>-->
+				        <option value="男">男</option>
+				        <option value="女">女</option>
+				    </select>
+				    <input type="text" name="age" placeholder="年龄"/>
+				    <input type="button" name="btn" value="提交">
+				</form>
+				<p>
+				    <form id="form2">
+				    	<span>请选择编号：</span>
+				        <select name="orderName" class="sortmode">
+				            <option value="id" >编号</option>
+				            <option value="age">年龄</option>
+				        </select>
+				        <span>请选择排序方式：</span>
+				        <select name="orderBy" class="sortmode">
+				            <option value="asc">升序</option>
+				            <option value="desc">降序</option>
+				        </select>
+				        <input type="button" name="orderButton" value="排序">
+				      <input type="button" value="批量删除">  
+				    </form>
+				</p>
+				</div>
+			</div>
+			<table width="100%" id="tab1" border="0" cellspacing="0" >
+			    <thead>
+				    <tr>
+				        <th>全选 <input type="checkbox" id="checkAll"></th>
+				        <th>编号</th>
+				        <th>姓名</th>
+				        <th>性别</th>
+				        <th>年龄</th>
+				        <th>操作</th>
+				    </tr>
+			    </thead>
+			    <tbody id="tbody">
+			    	<!--<tr>
+			    		<td><input type="checkbox" id="checkAll"></td>
+			    		<td>1</td>
+			    		<td>大红</td>
+			    		<td>女</td>
+			    		<td>23</td>
+			    		<td>
+			    			<input type="button" value="上移"/>
+			    			<input type="button" value="下移" />
+			    			<input type="button" value="删除"/>
+			    		</td>
+			    	</tr>-->
+			    </tbody>
+			</table>
+		</div>
+	</body>
+<script type="text/javascript" src="js/data.js"></script>
+<script type="text/javascript" src="js/jquery-3.1.1.js"></script>
+<script>
+var $tBody=$("#tbody");
+var checked=[];
+var id=data.length;
+init();
+$tBody.on("click",function(e){//触发了tbody的点击事件的时候
+	var parentTr=$(e.target).closest("tr");//找到离目标最近的这个tr，点击的父级
+	if(e.target.value=="上移"){//如果点击的是上移按钮。那么
+		if(parentTr.prev().length){//就要看一下是不是这个tr上面还有没有东西，如果有
+			parentTr.insertBefore(parentTr.prev());
+		}
+		color();
+	}
+	if(e.target.value=="下移"){
+		if(parentTr.next().length){
+			parentTr.insertAfter(parentTr.next());
+		}
+		color();
+	}
+	if(e.target.value=="删除"){
+		parentTr.remove();
+		color();
+		//不仅要删除页面上的数据，也要删除data数据中的数据
+		removeData(data,parentTr.attr("index"));
+		removeData(checked,parentTr.attr("index"));
+		isCheckAll();
+	}
+	if(e.target.type=="checkbox"){
+		if($(e.target).prop("checked")){
+			checked.push(parentTr.attr("index"));
+		}else{
+			removeData(checked,parentTr.attr("index"));
+		}
+		
+		$.each($(data),function(i,e){
+			if(e.id==parentTr.attr("index")){
+				e.checked=$(e.target).prop("checked");
+			}
+		})
+		                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+		isCheckAll();
+	}
+})
+
+$("#checkAll").on("click",function(){
+	var c=$(this).prop("checked");
+	$tBody.find("#checkAll").prop("checked",c);
+	checked.length=0;
+	if(c){
+		$.each($tBody.find("tr"), function(i,e){
+			checked.push($(e).attr("index"));
+			data[i].checked=true;//改变数据中的信息
+		});
+	}else{
+		$.each($tBody.find("tr"), function(i,e){
+			data[i].checked=false;//改变数据中的信息
+		});
+	}
+})
+
+$("#form1").on("click",function(e){
+	if(e.target.value==="提交"){
+		var $user=$("input[name=username]").val();
+		var $sex=$("select[name=sex]").val();
+		var $age=$("input[name=age]").val();
+		var json={
+            'id' : ++id,
+            'username' : $user,
+            'age' : $age,
+            'sex' : $sex,
+      	};
+		data.push(json);
+		var tr=createTr(json);
+		$("#tbody").append(tr);
+		color();
+		isCheckAll();
+	}
+})
+$("#form2").on("click",function(e){
+	var orderName=$("select[name=orderName]");
+	var orderBy=$("select[name=orderBy]");
+	if(e.target.value==="排序"){
+		if(orderBy.val()==="asc"){
+			data.sort(function(a,b){
+				return a[orderName.val()]-b[orderName.val()];
+			})
+		}else{
+			data.sort(function(b,a){
+				return a[orderName.val()]-b[orderName.val()];
+			})
+		}
+		init();
+	}
+	if(e.target.value==="批量删除"){
+		for(var i=0;i<checked.length;i++){
+			removeData(data,checked[i]);
+		}
+		checked.length=0;
+		$("#checkAll").prop("checked",false);
+		init();
+	}
+})
+
+
+function init(){
+	$tBody.html("");//清空表格里面的内容
+	$.each(data,function(i,e){
+		var tr=createTr(e);
+		$tBody.append(tr);
+	});
+	color();
+}
+
+function createTr(data){//创建tr
+	data.checked=data.checked?"checked":"";//给每个数据添加一个checked属性
+	var str=`<tr index=${data.id}>
+    		<td><input type="checkbox" id="checkAll"></td>
+    		<td>${data.id}</td>
+    		<td>${data.username}</td>
+    		<td>${data.sex}</td>
+    		<td>${data.age}</td>
+    		<td>
+    			<input type="button" value="上移"/>
+    			<input type="button" value="下移" />
+    			<input type="button" value="删除"/>
+    		</td>
+    	</tr>`;	
+	return $(str);
+}	
+function color(){//隔行变色
+	$tBody.find("tr:odd").addClass("c1");
+	$tBody.find("tr:even").removeClass("c1");
+	
+}
+function removeData(arr,id){
+	$.each(arr, function(i,e) {
+		if(e){
+			if((e.id===id*1)||(e==id)){
+				arr.splice(i,1);
+			}
+		}
+	});
+}
+function isCheckAll(){
+	if(checked.length==$tBody.find("tr").length){
+		$("#checkAll").prop("checked",true);
+	}else{
+		$("#checkAll").prop("checked",false);
+	}
+	if(!checked.length){
+		$("#checkAll").prop("checked",false);
+	}
+}
+</script>
+</html>
