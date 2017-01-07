@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<link type="text/css" rel="stylesheet" href="common.css">
+<script>
+
+</script>
+</head>
+
+<body>
+<!--登陆-->
+<div class="loginBox">
+	<ul class="loginList clearfix">
+    	<li class="hTxt">用户注册</li>
+        <li class="inputBox">
+        	<input type="text" class="inputs" id="add_user">
+        </li>
+        <li class="inputBox">
+        	<input type="password" class="inputs" id="add_pass">
+        </li>
+        <li class="btns">
+            <input id="add_btn" type="button" class="reg" value="" />
+        </li>
+        <li class="look"><a href="user_view.php" target="_blank">查看已注册用户</a></li>
+    </ul>
+</div>
+<!--注册-->
+<div class="loginBox">
+	<ul class="loginList clearfix">
+    	<li class="hTxt">用户登陆</li>
+        <li class="inputBox">
+        	<input type="text" class="inputs" id="login_user">
+        </li>
+        <li class="inputBox">
+        	<input type="password" class="inputs" id="login_pass">
+        </li>
+        <li class="btns">
+            <input id="login_btn" type="button" class="login" value="" />
+        </li>
+    </ul>
+</div>
+<script src="jquery-3.1.1.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+/*
+ 1、注册中：失焦的时候，会判断后台有没有。没有就注册成功。写到后台
+ 2、登录中，如果成功匹配用户名和密码，那么久登录成功否则失败
+ * */
+	var add_user=$("#add_user");
+	var add_pass=$("#add_pass");
+	var add_btn=$("#add_btn");
+	var login_user=$("#login_user");
+	var login_pass=$("#login_pass");
+	var login_btn=$("#login_btn");
+	add_user.on("blur",function(){
+		var val=add_user.val();
+		$.ajax({
+			type:"get",
+			url:"user_view.php",
+			dataType:"xml",
+			async:true,
+			success:function(json){
+				var name=$(json).find(".name");
+				name.suc=true;
+				$.each(name,function(i,e){//写在了循环里，
+					if(val===$(e).text()){
+						alert("该用户名已经被注册！");
+						add_user.css("color","red");
+						name.suc=false;
+						return;
+					};
+				})
+				if(name.suc){
+					add_user.css("color","green");
+				}
+			}
+		});
+	})
+	add_btn.on("click",function(){
+		var userVal=add_user.val();
+		var passVal=add_pass.val();
+		if(userVal&&passVal){
+			$.ajax({
+				type:"get",
+				url:"user.php?act=add&user="+userVal+"&pass="+passVal,
+				dataType:"text",
+				async:true,
+				success:function(json){
+					var json=eval("("+json+")");
+					if(!json.error){
+						alert("恭喜你，"+userVal+"账号已经注册成功！");
+					}else{
+						alert(json.desc);
+					}
+				}
+			});
+		}else{
+			alert("请填写完整");
+		}
+	})
+	
+	login_btn.on("click",function(){
+		var userVal=login_user.val();
+		var passVal=login_pass.val();
+		if(userVal&&passVal){
+			$.ajax({
+				type:"get",
+				url:"user.php?act=login&user="+userVal+"&pass="+passVal,
+				async:true,
+				dataType:"text",
+				success:function(json){
+					var json=eval("("+json+")");
+					if(!json.error){
+						alert(json.desc);
+					}else{
+						alert(json.desc);
+					}
+				}
+			});
+		}else{
+			alert("请填写完整");
+		}
+	})
+	
+</script>
+</body>
+</html>
