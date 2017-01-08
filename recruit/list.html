@@ -129,7 +129,6 @@
 				visibility: hidden;
 				line-height: 0;
 			}
-			
 			.pages {
 				width: 700px;
 				height: 26px;
@@ -166,7 +165,6 @@
 				margin-top: 3px;
 				margin-left: 2px;
 			}
-			
 			.pages p span a {
 				display: block;
 				width: 20px;
@@ -174,7 +172,6 @@
 				text-align: center;
 				line-height: 20px;
 			}
-			
 			.pages p span.focus a,
 			.pages p a:hover {
 				background: #666;
@@ -190,7 +187,6 @@
 				font-family: "微软雅黑";
 				padding-bottom: 8px;
 			}
-			
 			.content span {
 				float: left;
 				line-height: 24px;
@@ -334,19 +330,23 @@
 			if(aData[lx_type].text[i]){
 				(function(i){
 			 	str+=`
-			<p class="zp">
+			<p class="zp" >
         	<span><a href="">★ 职位需求：${aData[lx_type].text[i].zw}</a></span>
           <span>需求人数：${aData[lx_type].text[i].rs}名</span>
          	<span class="date">${aData.date(aData[lx_type].text[i].sj)}</span>
         </p>
-      	<p class="yq">${aData[lx_type].text[i].info[0].l}[<a href="">查看详情</a>]
+      	<p class="yq">${aData[lx_type].text[i].info[0].l}[<a href="content.html?${lx_type}#page=${hash}" /*index=${i} class="look"*/>查看详情</a>]
         </p>
 			`
 			 })(i)
 			}
-			 
+			
 		}
 		info.innerHTML=str;
+		/*var look=document.getElementsByClassName("look");
+		for(var i=0;i<look.length;i++){
+			
+		}*/
 	}
 	function page(num){
 		var len=aData[lx_type].text.length;
